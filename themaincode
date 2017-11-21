@@ -1,0 +1,43 @@
+#!/usr/bin/python
+import os, sys
+from wallaby import *
+
+def stop_motors():
+    mav(c.right_motor,0)
+    mav(c.left_motor,0)
+
+def depth_sensed():
+    return(analog(c.depth_sensor)>c.depth_mid)
+
+def BlackRight():
+    return(analog(c.right_tophat)>c.right_tophat_bw)
+  
+def BlackLeft():
+    return(analog(c.left_tophat)>c.left_tophat_bw)
+
+def follow_line():
+    if c.right_tophat_value>c.right_tophat_bw:
+        mav(c.right_motor,1000)
+    else: 
+        mav(c.left_motor,1000)
+    msleep(10)
+    stop_motors()
+
+def main():
+    print "Hello World"
+    while 1==1:
+        print"sensed depth"
+        if c.right_tophat_value>c.right_tophat_bw:
+            mav(c.right_motor,1000)
+        else: 
+            mav(c.left_motor,1000)
+        msleep(10)
+        stop_motors()
+    msleep(10)
+    print"got here"
+    stop_motors()
+    print"stopped"
+    	
+if __name__== "__main__":
+    sys.stdout = os.fdopen(sys.stdout.fileno(),"w",0)
+    main();
